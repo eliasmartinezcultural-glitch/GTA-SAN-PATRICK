@@ -1,10 +1,17 @@
 # GTA SAN PATRICK
 
-## Prototipo 0.2 — territorio + sandbox
+## Prototipo 0.3 — mundo vivo + territorio + sandbox
 
 **Concepto:** un mundo abierto inspirado en la filosofía de juego de GTA San Andreas, pero creado alrededor de San Patricio del Chañar. No copia personajes, mapa, música, misiones ni recursos protegidos de GTA.
 
 ### Ya funciona
+- Ciclo de día/noche con reloj interno.
+- Guardado local de dinero, progreso, hora y descubrimientos.
+- Tres objetivos encadenados con recompensa.
+- Sistema de descubrimiento de puntos de interés.
+- NPC con roles y actividad diferenciada según horario.
+- Panel de progreso.
+- Controles táctiles para celular/tablet.
 - Mundo 3D en navegador.
 - Cámara en tercera persona.
 - Personaje masculino.
