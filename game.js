@@ -1,94 +1,32 @@
-(() => {
-"use strict";
-
-/* SAN PATRICIO — NUEVO NÚCLEO
-   Regla: primero jugabilidad, después territorio, después detalle.
-   Sin dependencias externas. Si el navegador dibuja canvas, el juego arranca.
-*/
-const C=document.getElementById("game"),X=C.getContext("2d");
-const zoneEl=document.getElementById("zone"),clockEl=document.getElementById("clock");
-const W=2400,H=1800, keys=new Set();
-const world={roads:[],houses:[],trees:[],people:[],cars:[],points:[]};
-const p={x:1200,y:900,a:0,speed:220};
-let last=performance.now(),gameTime=8*60,cam={x:1200,y:900},dpr=1;
-
-function resize(){dpr=Math.min(devicePixelRatio||1,2);C.width=innerWidth*dpr;C.height=innerHeight*dpr;X.setTransform(dpr,0,0,dpr,0,0)}
-addEventListener("resize",resize); resize();
-addEventListener("keydown",e=>{keys.add(e.key.toLowerCase()); if(["arrowup","arrowdown","arrowleft","arrowright"," "].includes(e.key.toLowerCase()))e.preventDefault()});
-addEventListener("keyup",e=>keys.delete(e.key.toLowerCase()));
-
-function rect(x,y,w,h,t){world.roads.push({x,y,w,h,t})}
-function buildWorld(){
-  world.roads.length=world.houses.length=world.trees.length=world.people.length=world.cars.length=world.points.length=0;
-  // Estructura territorial grande: río, barda, ejes y sectores.
-  rect(0,790,W,120,"avenida"); rect(0,1040,W,72,"sur");
-  rect(1080,0,120,H,"eje"); rect(1390,0,82,H,"eje");
-  rect(380,0,70,H,"oeste"); rect(1780,0,82,H,"este");
-  rect(0,540,700,58,"picada"); rect(1700,650,700,58,"picada");
-  // Costa / río Neuquén al norte.
-  for(let i=0;i<28;i++)world.trees.push({x:40+i*84,y:90+Math.sin(i)*28,r:12+((i*7)%9)});
-  // Chacras y arboledas.
-  for(let i=0;i<75;i++){
-    const x=520+(i*137)%1050,y=170+(i*83)%480;
-    if(!onRoad(x,y))world.trees.push({x,y,r:8+(i%7)});
-  }
-  // Manzanas urbanas. Nunca se colocan sobre caminos.
-  for(let r=0;r<5;r++)for(let c=0;c<8;c++){
-    const x=520+c*145+(r%2)*18,y=660+r*110;
-    if(!onRoad(x+35,y+30))world.houses.push({x,y,w:68,h:52});
-  }
-  const names=["Plaza","Municipalidad","Deporte","Costa","Chacras","Parque Industrial","Mirador"];
-  world.points.push({x:1115,y:850,n:names[0]},{x:1260,y:850,n:names[1]},{x:1540,y:850,n:names[2]},
-    {x:720,y:300,n:names[3]},{x:760,y:430,n:names[4]},{x:2050,y:980,n:names[5]},{x:2050,y:360,n:names[6]});
-  for(let i=0;i<20;i++)world.people.push({x:600+(i*101)%1200,y:650+(i*67)%480,v:.25+(i%4)*.08,t:i%2});
-  for(let i=0;i<9;i++)world.cars.push({x:200+i*250,y:830+(i%2)*250,a:i%2?0:Math.PI/2,v:45+(i%3)*15});
-}
-function onRoad(x,y){return world.roads.some(r=>x>r.x-8&&x<r.x+r.w+8&&y>r.y-8&&y<r.y+r.h+8)}
-function blocked(x,y){return x<35||y<35||x>W-35||y>H-35}
-function sector(x,y){
-  if(y<500)return "Costa / chacras";
-  if(x>1850)return "Parque Industrial";
-  if(y>1180)return "Barrios";
-  return "Centro";
-}
-function update(dt){
-  let dx=(keys.has("d")||keys.has("arrowright")?1:0)-(keys.has("a")||keys.has("arrowleft")?1:0);
-  let dy=(keys.has("s")||keys.has("arrowdown")?1:0)-(keys.has("w")||keys.has("arrowup")?1:0);
-  if(dx||dy){const m=Math.hypot(dx,dy);dx/=m;dy/=m;p.a=Math.atan2(dy,dx);const nx=p.x+dx*p.speed*dt,ny=p.y+dy*p.speed*dt;if(!blocked(nx,p.y))p.x=nx;if(!blocked(p.x,ny))p.y=ny}
-  for(const n of world.people){n.x+=Math.cos(n.t?0:.7)*n.v*dt;n.y+=Math.sin(n.t?.6:0)*n.v*dt;if(n.x<450||n.x>1800)n.t^=1}
-  for(const c of world.cars){c.x+=Math.cos(c.a)*c.v*dt;c.y+=Math.sin(c.a)*c.v*dt;if(c.x>W+30)c.x=-30;if(c.y>H+30)c.y=-30}
-  gameTime=(gameTime+dt*8)%(24*60);
-  zoneEl.textContent=sector(p.x,p.y);
-  clockEl.textContent=String(Math.floor(gameTime/60)).padStart(2,"0")+":"+String(Math.floor(gameTime%60)).padStart(2,"0");
-  cam.x+=(p.x-cam.x)*Math.min(1,dt*7);cam.y+=(p.y-cam.y)*Math.min(1,dt*7);
-}
-function draw(){
-  const w=innerWidth,h=innerHeight;X.clearRect(0,0,w,h);
-  X.save();X.translate(w/2-cam.x,h/2-cam.y);
-  // territorio
-  X.fillStyle="#b7c88b";X.fillRect(0,0,W,H);
-  X.fillStyle="#d7e0bd";X.fillRect(0,0,W,500); // costa/bajo río
-  X.fillStyle="#79aeb8";X.beginPath();X.moveTo(0,0);X.lineTo(W,0);X.lineTo(W,115);X.quadraticCurveTo(1800,175,1200,125);X.quadraticCurveTo(550,75,0,160);X.closePath();X.fill();
-  // barda
-  X.fillStyle="#a8835c";X.beginPath();X.moveTo(0,510);X.lineTo(W,510);X.lineTo(W,570);X.lineTo(0,570);X.closePath();X.fill();
-  // chacras
-  for(let x=520;x<1700;x+=42){X.strokeStyle="#9aae6b";X.beginPath();X.moveTo(x,150);X.lineTo(x,500);X.stroke()}
-  // roads
-  for(const r of world.roads){X.fillStyle="#555b5d";X.fillRect(r.x,r.y,r.w,r.h);X.strokeStyle="#c9b96d";X.lineWidth=2;if(r.w>r.h){for(let x=r.x+15;x<r.x+r.w;x+=42){X.beginPath();X.moveTo(x,r.y+r.h/2);X.lineTo(x+20,r.y+r.h/2);X.stroke()}}else{for(let y=r.y+15;y<r.y+r.h;y+=42){X.beginPath();X.moveTo(r.x+r.w/2,y);X.lineTo(r.x+r.w/2,y+20);X.stroke()}}}
-  // houses
-  for(const b of world.houses){X.fillStyle="#d9c9aa";X.fillRect(b.x,b.y,b.w,b.h);X.fillStyle="#8e6650";X.beginPath();X.moveTo(b.x-5,b.y);X.lineTo(b.x+b.w/2,b.y-20);X.lineTo(b.x+b.w+5,b.y);X.fill()}
-  // trees
-  for(const t of world.trees){X.fillStyle="#4f7d43";X.beginPath();X.arc(t.x,t.y,t.r,0,7);X.fill();X.fillStyle="#76563b";X.fillRect(t.x-2,t.y+t.r-2,4,10)}
-  // points
-  for(const q of world.points){X.fillStyle="#f4e7c4";X.fillRect(q.x-42,q.y-18,84,36);X.fillStyle="#26342c";X.font="12px Arial";X.textAlign="center";X.fillText(q.n,q.x,q.y+4)}
-  // cars
-  for(const c of world.cars){X.save();X.translate(c.x,c.y);X.rotate(c.a);X.fillStyle="#263b4b";X.fillRect(-18,-9,36,18);X.fillStyle="#b8d2d8";X.fillRect(-5,-7,11,14);X.restore()}
-  // people
-  for(const n of world.people){X.fillStyle="#6d493b";X.beginPath();X.arc(n.x,n.y-9,5,0,7);X.fill();X.fillStyle=n.t?"#5c7180":"#8d684d";X.fillRect(n.x-5,n.y-4,10,15)}
-  // player
-  X.save();X.translate(p.x,p.y);X.rotate(p.a);X.fillStyle="#20252a";X.fillRect(-9,-13,18,26);X.fillStyle="#d6b08d";X.beginPath();X.arc(0,-15,7,0,7);X.fill();X.fillStyle="#e2c34c";X.fillRect(4,-3,5,6);X.restore();
-  X.restore();
-}
-function loop(now){const dt=Math.min((now-last)/1000,.05);last=now;update(dt);draw();requestAnimationFrame(loop)}
-buildWorld(); requestAnimationFrame(loop);
-})();
+(()=>{"use strict";
+const C=document.getElementById("game"),ctx=C.getContext("2d"),D=WORLD_DATA,$=id=>document.getElementById(id),keys=new Set(),SAVE="spc_life_v1";
+const S={x:1210,y:1060,a:-Math.PI/2,money:2500,time:480,day:1,energy:100,mission:null,completed:[],activity:null};let cam={x:S.x,y:S.y},last=performance.now(),open=false,toastT;
+function resize(){const d=Math.min(devicePixelRatio||1,2);C.width=innerWidth*d;C.height=innerHeight*d;ctx.setTransform(d,0,0,d,0,0)}addEventListener("resize",resize);resize();
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}function clock(){return String(Math.floor(S.time/60)%24).padStart(2,"0")+":"+String(Math.floor(S.time%60)).padStart(2,"0")}function zone(){const z=D.zones.find(z=>S.x>=z.x&&S.x<z.x+z.w&&S.y>=z.y&&S.y<z.y+z.h);return z?z.n:"Chañar"}function toast(t){$("hint").textContent=t;$("hint").classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>$("hint").classList.remove("show"),2600)}
+function nearest(){let b=null,bd=100;for(const p of D.places){const d=dist(S,p);if(d<bd){bd=d;b=p}}return b}
+function save(){try{localStorage.setItem(SAVE,JSON.stringify({x:S.x,y:S.y,money:S.money,time:S.time,day:S.day,energy:S.energy,mission:S.mission,completed:S.completed}))}catch{}}function load(){try{const v=JSON.parse(localStorage.getItem(SAVE));if(v)Object.assign(S,v)}catch{}}
+const MISS=[
+{id:"tour",title:"Conocer Chañar",desc:"Descubrí tres lugares del territorio.",reward:700,need:3,type:"visit"},
+{id:"delivery",title:"Un encargo del barrio",desc:"Llegá al Parque Industrial.",reward:900,need:1,type:"industrial"},
+{id:"coast",title:"Una tarde en la costa",desc:"Llegá al Balneario Municipal.",reward:500,need:1,type:"coast"},
+{id:"sport",title:"Moverse hace bien",desc:"Hacé una actividad deportiva.",reward:650,need:1,type:"sport"},
+{id:"chacra",title:"Camino de producción",desc:"Llegá a las chacras.",reward:850,need:1,type:"chacra"}];
+function start(id){const m=MISS.find(x=>x.id===id);S.mission={id:m.id,title:m.title,desc:m.desc,reward:m.reward,need:m.need,type:m.type,progress:0,seen:[]};close();toast("Nueva misión: "+m.title);save()}
+function missionTick(){const m=S.mission;if(!m)return;const p=nearest();if(m.type==="visit"&&p&&!m.seen.includes(p.id)){m.seen.push(p.id);m.progress=m.seen.length;toast("Descubriste: "+p.n)}if(m.type==="industrial"&&S.x>2250&&S.y>1150)m.progress=1;if(m.type==="coast"&&p?.id==="balneario")m.progress=1;if(m.type==="sport"&&S.activity)m.progress=1;if(m.type==="chacra"&&p?.id==="chacra")m.progress=1;if(m.progress>=m.need){S.money+=m.reward;S.completed.push(m.id);toast("Misión completa  +$"+m.reward);S.mission=null;save()}}
+function interact(){const p=nearest();if(!p){toast("Explorá un poco más.");return}if(p.kind==="sport"){S.activity="sport";S.energy=Math.min(100,S.energy+12);S.money=Math.max(0,S.money-20);toast("Actividad deportiva completada.")}else if(p.kind==="work"){S.money+=80;toast("Trabajo ocasional realizado  +$80")}else toast(p.n+" — "+p.desc);missionTick()}
+function update(dt){let dx=(keys.has("d")||keys.has("arrowright")?1:0)-(keys.has("a")||keys.has("arrowleft")?1:0),dy=(keys.has("s")||keys.has("arrowdown")?1:0)-(keys.has("w")||keys.has("arrowup")?1:0);if(dx||dy){let l=Math.hypot(dx,dy);dx/=l;dy/=l;S.a=Math.atan2(dy,dx);const sp=190;S.x=Math.max(25,Math.min(D.width-25,S.x+dx*sp*dt));S.y=Math.max(25,Math.min(D.height-25,S.y+dy*sp*dt))}S.time+=dt*7;if(S.time>=1440){S.time-=1440;S.day++}S.energy=Math.max(0,S.energy-dt*.1);for(const n of D.npcs){n.x+=Math.cos(n.id*1.7)*n.speed*dt;n.y+=Math.sin(n.id*2.3)*n.speed*dt;n.x=Math.max(450,Math.min(2250,n.x));n.y=Math.max(680,Math.min(1950,n.y))}for(const c of D.cars){c.x+=Math.cos(c.a)*c.speed*dt;c.y+=Math.sin(c.a)*c.speed*dt;if(c.a===0&&c.x>D.width+20)c.x=-20;if(c.a===Math.PI/2&&c.y>D.height+20)c.y=-20}cam.x+=(S.x-cam.x)*Math.min(1,dt*6);cam.y+=(S.y-cam.y)*Math.min(1,dt*6);$("sector").textContent=zone();$("clock").textContent=clock();$("money").textContent=Math.floor(S.money);missionTick()}
+function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);ctx.save();ctx.translate(innerWidth/2-cam.x,innerHeight/2-cam.y);ctx.fillStyle="#aabd7d";ctx.fillRect(0,0,D.width,D.height);
+ctx.fillStyle="#75aab3";ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(D.width,0);ctx.lineTo(D.width,145);ctx.quadraticCurveTo(2300,190,1750,115);ctx.quadraticCurveTo(850,50,0,180);ctx.closePath();ctx.fill();ctx.fillStyle="#a88360";ctx.fillRect(0,590,D.width,70);
+ctx.strokeStyle="#91a967";ctx.lineWidth=3;for(let x=500;x<2050;x+=35){ctx.beginPath();ctx.moveTo(x,170);ctx.lineTo(x,540);ctx.stroke()}
+for(const r of D.roads){ctx.fillStyle=r.t==="rural"?"#8a7d61":"#4e5556";ctx.fillRect(r.x,r.y,r.w,r.h);ctx.strokeStyle="#d5c16c";ctx.lineWidth=2;if(r.w>r.h)for(let x=r.x+15;x<r.x+r.w;x+=45){ctx.beginPath();ctx.moveTo(x,r.y+r.h/2);ctx.lineTo(x+22,r.y+r.h/2);ctx.stroke()}else for(let y=r.y+15;y<r.y+r.h;y+=45){ctx.beginPath();ctx.moveTo(r.x+r.w/2,y);ctx.lineTo(r.x+r.w/2,y+22);ctx.stroke()}}
+for(const h of D.houses){ctx.fillStyle="#d7c4a2";ctx.fillRect(h[0],h[1],74,52);ctx.fillStyle="#865f4c";ctx.beginPath();ctx.moveTo(h[0]-5,h[1]);ctx.lineTo(h[0]+37,h[1]-20);ctx.lineTo(h[0]+79,h[1]);ctx.fill()}
+for(const t of D.trees){ctx.fillStyle="#477645";ctx.beginPath();ctx.arc(t.x,t.y,t.r,0,7);ctx.fill();ctx.fillStyle="#6f5138";ctx.fillRect(t.x-2,t.y+t.r-1,4,9)}
+for(const p of D.places){ctx.fillStyle=p.id===S.mission?.type?"#f2c84b":"#efe5c8";ctx.strokeStyle="#26342c";ctx.beginPath();ctx.arc(p.x,p.y,22,0,7);ctx.fill();ctx.stroke();ctx.fillStyle="#17221b";ctx.font="11px Arial";ctx.textAlign="center";ctx.fillText(p.n,p.x,p.y+39)}
+for(const c of D.cars){ctx.save();ctx.translate(c.x,c.y);ctx.rotate(c.a);ctx.fillStyle=["#263d49","#7d5d45","#3c5b42"][c.color];ctx.fillRect(-20,-9,40,18);ctx.fillStyle="#b7d0d0";ctx.fillRect(-4,-7,12,14);ctx.restore()}
+for(const n of D.npcs){ctx.fillStyle="#684a3b";ctx.beginPath();ctx.arc(n.x,n.y-10,5,0,7);ctx.fill();ctx.fillStyle=n.job==="deporte"?"#b45f4d":"#63798a";ctx.fillRect(n.x-6,n.y-5,12,16)}
+ctx.save();ctx.translate(S.x,S.y);ctx.rotate(S.a);ctx.fillStyle="#20252a";ctx.fillRect(-10,-14,20,28);ctx.fillStyle="#d8b28f";ctx.beginPath();ctx.arc(0,-16,7,0,7);ctx.fill();ctx.fillStyle="#d5b84e";ctx.fillRect(5,-4,5,7);ctx.restore();ctx.restore()}
+function panel(type){open=true;$("panel").classList.remove("hidden");let title="SAN PATRICIO",html="";if(type==="map"){title="CHAÑAR — PROGRESO";html='<div class="row"><span>Día</span><b>'+S.day+'</b></div><div class="row"><span>Hora</span><b>'+clock()+'</b></div><div class="row"><span>Dinero</span><b>$'+Math.floor(S.money)+'</b></div><div class="row"><span>Energía</span><b>'+Math.floor(S.energy)+'%</b></div><div class="row"><span>Misiones</span><b>'+S.completed.length+'</b></div><p class="muted">Explorá libremente: río, bardas, chacras, centro, barrios y producción.</p>'}else if(type==="missions"){title="ACTIVIDADES";for(const m of MISS){const done=S.completed.includes(m.id),active=S.mission?.id===m.id;html+='<div class="mission"><strong>'+m.title+(done?' ✓':'')+'</strong><div>'+m.desc+'</div><small>Recompensa: $'+m.reward+'</small>';if(!done&&!active)html+='<button class="action" data-mission="'+m.id+'">ACEPTAR</button>';if(active)html+='<div class="ok">En curso · '+m.progress+'/'+m.need+'</div>';html+='</div>'}}else{html='<button class="action" data-panel="map">MAPA Y PROGRESO</button><button class="action" data-panel="missions">MISIONES Y ACTIVIDADES</button><button class="action" data-save="1">GUARDAR PARTIDA</button><p class="muted">Mundo abierto inspirado en la libertad y densidad sistémica de GTA San Andreas, con una mirada centrada en vivir San Patricio del Chañar.</p>'}$("panelTitle").textContent=title;$("panelBody").innerHTML=html}
+function close(){open=false;$("panel").classList.add("hidden")}
+$("menu").onclick=()=>panel("menu");$("close").onclick=close;$("panelBody").onclick=e=>{if(e.target.dataset.mission){start(e.target.dataset.mission);return}if(e.target.dataset.panel){panel(e.target.dataset.panel);return}if(e.target.dataset.save){save();toast("Partida guardada")}};
+addEventListener("keydown",e=>{keys.add(e.key.toLowerCase());if(e.key.toLowerCase()==="e")interact();if(e.key.toLowerCase()==="m")panel("map");if(e.key==="Escape")close()});addEventListener("keyup",e=>keys.delete(e.key.toLowerCase()));
+document.querySelectorAll("#touch button").forEach(b=>{const k=b.dataset.k;b.onpointerdown=()=>keys.add(k);b.onpointerup=()=>keys.delete(k);b.onpointerleave=()=>keys.delete(k)});load();function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;if(!open)update(dt);draw();requestAnimationFrame(loop)}requestAnimationFrame(loop)})();
