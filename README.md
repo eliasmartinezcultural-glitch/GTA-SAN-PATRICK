@@ -97,7 +97,35 @@ La primera capa de mapeo está construida a partir de cartografía pública de l
 
 La referencia a San Andreas está en los sistemas: libertad, exploración, movilidad, progresión, economía, misiones, actividades, personajes y consecuencias. La identidad, el territorio y las historias deben ser propias de Chañar.
 
-## Próximas capas
+## Arquitectura de crecimiento 0.4+
+
+La referencia jugable es la filosofía de los mundos abiertos de GTA San Andreas: mapa amplio, libertad, vehículos, misiones, actividades paralelas, economía, estadísticas, personajes, descubrimientos, progresión y vida cotidiana. El contenido debe ser completamente original y territorialmente propio.
+
+### Mapeo territorial reforzado
+- RP7 y RP8 como ejes de movilidad.
+- Picadas como red rural/productiva.
+- Centro urbano y Sector Sur.
+- Chacras y corredores de producción.
+- Río Neuquén, Balneario y Dique Compensador.
+- Bardas y Mirador La Virgen.
+- Corredor vitivinícola y Camino del Vino.
+- Nuevos nodos: El Chical, Sala de Elaboración de Alimentos, Costa Verde y Picada 11.
+- Sistema preparado para sumar calles verificadas sin rehacer el mundo.
+
+Fuentes recientes confirman el desarrollo del Camino del Vino por Picada 1 y la conexión entre bodegas; Turismo Neuquén documenta las ubicaciones y características del corredor vitivinícola. En 2026 también se incorporaron nuevas referencias locales como Bodega Urbana El Chical y la infraestructura de elaboración de alimentos. La cartografía provincial se utiliza como referencia territorial, no como recurso gráfico copiado.
+
+### Regla multidispositivo
+Todo sistema nuevo debe nacer preparado para:
+- teclado y mouse;
+- touch en celular/tablet;
+- pantallas pequeñas;
+- rendimiento bajo;
+- guardado local;
+- interfaz legible sin depender de hover;
+- controles simples;
+- carga futura por sectores.
+
+### Próximas capas
 
 ### 0.3 — mapa jugable
 - reproducir con mayor precisión la trama vial urbana;
