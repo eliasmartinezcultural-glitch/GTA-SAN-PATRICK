@@ -1,5 +1,5 @@
 {
-  "version": "0.3-mundo-vivo",
+  "version": "0.4-mundo-bloqueado",
   "source_note": "Base de diseño territorial construida con cartografía pública provincial y fuentes oficiales locales/provinciales. Las coordenadas x/z del juego son una representación artística escalada, no coordenadas GPS.",
   "reference_map": "Dirección Provincial de Catastro e Información Territorial - Mapa de localidad de San Patricio del Chañar",
   "zones": [
@@ -469,5 +469,202 @@
       "names",
       "assets"
     ]
+  },
+  "world_rules": {
+    "supreme_rule": "JUGAR PRIMERO. Todo lo demás es secundario.",
+    "locked_base": "La experiencia 0.4 limpia queda bloqueada como base visual y de interacción. Las nuevas capas se agregan sin invadir el juego ni romper controles existentes.",
+    "open_world": "El jugador puede abandonar una misión, conducir, caminar, descubrir lugares, hacer actividades y volver cuando quiera.",
+    "territory": "San Patricio del Chañar no es decoración: calles, picadas, río, bardas, chacras, barrios, servicios y producción se convierten progresivamente en sistemas.",
+    "ui": "Durante el juego no hay bloques informativos permanentes en la parte superior. Menú, mapa, progreso, guardar y configuración viven dentro del botón de pausa.",
+    "mobile": "Toda mecánica nueva debe funcionar con controles simples en PC y touch, sin depender de hover.",
+    "performance": "Priorizar sensación de juego y respuesta antes que cantidad de objetos o efectos.",
+    "organic_growth": "Cada sistema nuevo debe apoyarse en los anteriores y aportar una decisión jugable real.",
+    "originality": "Inspiración en la filosofía de mundo abierto de GTA San Andreas; contenido, personajes, diálogos, misiones, música, nombres, mapas y assets propios."
+  },
+  "open_world_design": {
+    "core_loop": [
+      "explorar",
+      "descubrir",
+      "conseguir recursos",
+      "elegir actividad",
+      "mejorar personaje/vehículo",
+      "desbloquear oportunidades",
+      "volver a explorar"
+    ],
+    "freedom_rules": [
+      "ninguna misión debe secuestrar al jugador durante largos períodos",
+      "las actividades secundarias deben tener valor propio",
+      "el mapa debe ofrecer motivos para desviarse",
+      "las recompensas deben cambiar opciones futuras"
+    ],
+    "world_density": "No llenar por llenar. Cada zona necesita identidad, actividad y puntos memorables.",
+    "verticality": "Usar bardas, miradores, edificios, puentes, costa y caminos rurales para crear lectura vertical del territorio.",
+    "secrets": "Atajos, lugares poco visibles, conversaciones, objetos y actividades opcionales deben recompensar la curiosidad.",
+    "time": "El horario modifica peatones, servicios, trabajos, actividades y atmósfera."
+  },
+  "character_design": {
+    "player": "Protagonista masculino original, joven adulto, diseño reconocible y simple para rendimiento web.",
+    "visual_rules": [
+      "silueta clara",
+      "ropa cotidiana patagónica contemporánea",
+      "paleta de vestuario intercambiable",
+      "sin copiar personajes de franquicias",
+      "animaciones reutilizables",
+      "cabeza y manos legibles a distancia",
+      "vehículo y personaje deben distinguirse inmediatamente"
+    ],
+    "progression": [
+      "ropa",
+      "accesorios",
+      "habilidades",
+      "dinero",
+      "vehículos",
+      "propiedades",
+      "reputación"
+    ],
+    "stats": [
+      "condición",
+      "conducción",
+      "resistencia",
+      "habilidad social",
+      "conocimiento del territorio"
+    ],
+    "npc_archetypes": [
+      "vecino",
+      "estudiante",
+      "trabajador",
+      "productor",
+      "chacarero",
+      "comerciante",
+      "deportista",
+      "artista",
+      "docente",
+      "empleado público",
+      "turista",
+      "adulto mayor",
+      "familia",
+      "joven"
+    ],
+    "npc_rules": [
+      "cada NPC tiene zona habitual",
+      "horario básico",
+      "actividad",
+      "relación con lugares",
+      "variación de apariencia",
+      "reacciones simples al jugador",
+      "rutina antes que diálogo genérico"
+    ],
+    "population": "Los personajes deben sentirse habitantes del mismo Chañar y no muñecos intercambiables."
+  },
+  "mission_design": {
+    "philosophy": "Misiones con objetivo claro, desplazamiento, interacción y consecuencia; nunca simples recados repetidos.",
+    "families": [
+      "historia principal",
+      "trabajo",
+      "comunidad",
+      "producción",
+      "deporte",
+      "cultura",
+      "exploración",
+      "vehículos",
+      "encuentros",
+      "secretos"
+    ],
+    "structure": [
+      "inicio",
+      "objetivo",
+      "obstáculo",
+      "decisión",
+      "resolución",
+      "recompensa",
+      "consecuencia"
+    ],
+    "gta_reference": [
+      "variedad de objetivos",
+      "uso real del mapa",
+      "vehículos como herramienta",
+      "personajes secundarios memorables",
+      "misiones cortas interconectadas",
+      "libertad entre encargos"
+    ],
+    "consequence": "Las decisiones pueden modificar dinero, reputación, acceso, relaciones o disponibilidad de actividades.",
+    "fail_forward": "Fallar no siempre reinicia todo: algunas misiones producen estados alternativos."
+  },
+  "vehicle_design": {
+    "families": [
+      "bicicleta",
+      "moto",
+      "auto",
+      "camioneta",
+      "utilitario",
+      "vehículo de trabajo"
+    ],
+    "rules": [
+      "cada vehículo tiene sensación de conducción distinta",
+      "entrar/salir rápido",
+      "uso territorial real",
+      "propiedad y mejoras progresivas",
+      "combustible solo si agrega decisiones",
+      "vehículos de trabajo conectados a empleos"
+    ],
+    "camera": "Tercera persona estable, con prioridad a lectura del camino y control."
+  },
+  "activity_design": {
+    "categories": [
+      "deporte",
+      "cultura",
+      "producción",
+      "pesca",
+      "exploración",
+      "conducción",
+      "social",
+      "comercio",
+      "coleccionables"
+    ],
+    "rule": "Las actividades deben ser jugables y repetibles, no botones que abren texto.",
+    "examples": [
+      "skate",
+      "deporte",
+      "trabajo en chacra",
+      "actividad en bodega",
+      "pesca",
+      "kayak",
+      "recorridos por bardas",
+      "encuentros en plaza",
+      "radio/producción audiovisual",
+      "entregas locales"
+    ]
+  },
+  "progression_design": {
+    "principle": "El jugador debe sentir que cada sesión abre algo nuevo.",
+    "layers": [
+      "dinero",
+      "habilidades",
+      "reputación",
+      "relaciones",
+      "vehículos",
+      "propiedades",
+      "conocimiento del mapa",
+      "misiones"
+    ],
+    "anti_grind": "No exigir repetición artificial. La progresión debe surgir de jugar.",
+    "milestones": [
+      "primer vehículo",
+      "primer trabajo",
+      "primer ingreso estable",
+      "primer hogar",
+      "primera actividad propia",
+      "dominio de zonas",
+      "misiones de alto impacto"
+    ]
+  },
+  "technical_rules": {
+    "input": "Toda acción importante debe tener equivalente teclado y touch.",
+    "save": "Guardar localmente estados importantes sin bloquear la partida.",
+    "streaming": "Preparar sectores para carga progresiva cuando el mundo crezca.",
+    "assets": "Preferir geometría simple, materiales ligeros y reutilización.",
+    "hud": "Solo información contextual mínima durante juego.",
+    "pause": "El menú es la puerta única para configuración, mapa, progreso y guardado.",
+    "accessibility": "Texto legible, botones grandes en touch, sin información basada exclusivamente en color."
   }
 }
