@@ -3,22 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>GTA SAN PATRICK — San Patricio del Chañar</title>
+<title>SAN PATRICK — San Patricio del Chañar</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div id="hud">
-  <div class="brand">SAN PATRICK <span>0.1</span></div>
+  <div class="brand">SAN PATRICK <span>0.2</span></div>
   <div class="location">SAN PATRICIO DEL CHAÑAR · PATAGONIA</div>
-  <div class="hint">WASD / FLECHAS · explorar</div>
+  <div class="hint">WASD / FLECHAS · explorar · M · mapa</div>
 </div>
+
+<div id="minimap">
+  <div class="map-title">CHAÑAR · MAPA DE JUEGO</div>
+  <div id="map-canvas"></div>
+  <div class="map-legend"><span>●</span> jugador &nbsp; <b>━</b> RP7 &nbsp; <i>·</i> picadas</div>
+</div>
+
+<div id="map-panel">
+  <div class="panel-head"><span>MAPA TERRITORIAL</span><button id="close-map">×</button></div>
+  <p class="panel-sub">San Patricio del Chañar · versión de diseño jugable</p>
+  <div id="zone-list"></div>
+</div>
+
 <div id="start">
   <div class="start-card">
-    <p class="eyebrow">UN MUNDO LOCAL · UNA VIDA ABIERTA</p>
+    <p class="eyebrow">SAN PATRICIO DEL CHAÑAR · MUNDO ABIERTO</p>
     <h1>SAN<br>PATRICK</h1>
-    <p>Un mundo abierto inspirado en la filosofía de juego de los grandes sandbox, construido alrededor de San Patricio del Chañar.</p>
+    <p>Un sandbox inspirado en la filosofía de juego de <strong>GTA San Andreas</strong>, pero construido alrededor de la vida, el territorio y los caminos de San Patricio del Chañar.</p>
     <button id="play">ENTRAR AL MUNDO</button>
-    <small>Prototipo 0.1 · navegador · escritorio</small>
+    <small>Prototipo 0.2 · mapa territorial en construcción</small>
   </div>
 </div>
 <div id="message"></div>
