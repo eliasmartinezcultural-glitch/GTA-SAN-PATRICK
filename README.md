@@ -1,5 +1,46 @@
 # GTA SAN PATRICK
 
+## 0.4 — BASE BLOQUEADA · MUNDO ABIERTO
+
+> **REGLA SUPERIOR: JUGAR PRIMERO.**
+>
+> La base 0.4 queda bloqueada como criterio de experiencia. Todo lo que venga después suma profundidad sin ensuciar la pantalla de juego, romper controles ni convertir la interfaz en protagonista.
+
+**Dirección:** construir un mundo abierto inspirado en la filosofía de GTA San Andreas, pero con identidad, territorio, personajes y sistemas propios de San Patricio del Chañar.
+
+### Reglas maestras
+- El juego ocupa la pantalla; la información permanente es mínima.
+- Menú, mapa, progreso, guardar y configuración viven detrás del botón de pausa.
+- El jugador puede caminar, conducir, explorar, trabajar, descubrir y abandonar actividades libremente.
+- Chañar es el mundo: territorio, horarios, rutas, barrios, chacras, río, bardas y producción tienen función jugable.
+- Cada sistema nuevo debe aportar una decisión, una recompensa o una consecuencia.
+- Multidispositivo desde el origen: PC + touch + rendimiento bajo.
+- La progresión debe sentirse natural, nunca como relleno o grind.
+- Referencia fuerte a GTA San Andreas en estructura de mundo abierto; contenido completamente original.
+
+### Diseño de personajes
+**Protagonista:** hombre joven adulto, original, reconocible por silueta, vestuario cotidiano patagónico y evolución visual. Su progreso se expresa mediante ropa, accesorios, habilidades, dinero, vehículos, propiedades y reputación.
+
+**NPC:** no son decoración. Tendrán zona habitual, horarios, actividad, relaciones con lugares, apariencia variable y reacciones. Familias de población: vecinos, estudiantes, trabajadores, productores, chacareros, comerciantes, deportistas, artistas, docentes, empleados públicos, familias, jóvenes y adultos mayores.
+
+**Regla:** primero rutina y comportamiento; después diálogo. Queremos una ciudad que parezca habitada.
+
+### Mundo abierto
+El bucle principal será:
+**EXPLORAR → DESCUBRIR → ELEGIR → ACTUAR → GANAR/MEJORAR → DESBLOQUEAR → VOLVER A EXPLORAR.**
+
+Las misiones deben usar realmente el mapa, aprovechar vehículos y producir consecuencias. Las actividades paralelas deben ser divertidas por sí mismas. Los secretos deben premiar la curiosidad. El horario debe cambiar el comportamiento del mundo.
+
+### Referencia GTA San Andreas
+Tomamos como referencia sistemas y criterios: libertad, tercera persona, conducción, misiones variadas, personajes memorables, economía, propiedades, estadísticas, actividades secundarias, mapa, rutinas, secretos, progresión, día/noche y vida fuera de la misión.
+
+**No se copian:** personajes, historia, diálogos, música, logos, mapa, geometría, misiones, nombres ni assets.
+
+### Arquitectura de crecimiento
+Los siguientes sistemas se incorporarán progresivamente: tráfico, vehículos diferenciados, trabajos, economía local, propiedades, relaciones, reputación, actividades deportivas/culturales, ciclo productivo, clima, fauna, misiones ramificadas, rutinas de peatones, radio ambiental original y carga por sectores.
+
+Cada capa debe construirse sobre la anterior. **No se agregan sistemas por cantidad: se agregan porque mejoran la jugabilidad.**
+
 ## Prototipo 0.3 — mundo vivo + territorio + sandbox
 
 **Concepto:** un mundo abierto inspirado en la filosofía de juego de GTA San Andreas, pero creado alrededor de San Patricio del Chañar. No copia personajes, mapa, música, misiones ni recursos protegidos de GTA.
@@ -97,7 +138,7 @@ La primera capa de mapeo está construida a partir de cartografía pública de l
 
 La referencia a San Andreas está en los sistemas: libertad, exploración, movilidad, progresión, economía, misiones, actividades, personajes y consecuencias. La identidad, el territorio y las historias deben ser propias de Chañar.
 
-## Arquitectura de crecimiento 0.4+
+## Arquitectura de crecimiento histórica / documentación
 
 La referencia jugable es la filosofía de los mundos abiertos de GTA San Andreas: mapa amplio, libertad, vehículos, misiones, actividades paralelas, economía, estadísticas, personajes, descubrimientos, progresión y vida cotidiana. El contenido debe ser completamente original y territorialmente propio.
 
