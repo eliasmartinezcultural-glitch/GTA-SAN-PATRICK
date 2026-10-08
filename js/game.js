@@ -185,7 +185,7 @@ function moveCharacter(dt){
  let dz=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0);
  const len=Math.hypot(dx,dz)||1;dx/=len;dz/=len;
  if(!dx&&!dz)return {dx:0,dz:0};
- const speed=vehicleMode?18:8.5,obj=vehicleMode?car:player;
+ const territoryFactor=vehicleMode?(car.userData.territoryDrivingFactor||1):1;\n const speed=(vehicleMode?18:8.5)*territoryFactor,obj=vehicleMode?car:player;
  obj.position.x+=dx*speed*dt;obj.position.z+=dz*speed*dt;obj.rotation.y=Math.atan2(dx,dz);
  obj.position.x=THREE.MathUtils.clamp(obj.position.x,-180,185);obj.position.z=THREE.MathUtils.clamp(obj.position.z,-205,125);
  if(vehicleMode){player.position.copy(car.position);player.visible=false}else player.visible=true;
