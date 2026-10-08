@@ -347,9 +347,107 @@ for(const [x,z,c] of [[-72,3,0x7d4b3e],[78,3,0x3e5668],[174,-12,0x6b694d],[215,7
   const ccar=makeCar(c); ccar.position.set(x,0,z); world.add(ccar); cars.push(ccar);
 }
 
+/* ---------- WORLD BIBLE: CHANAR DEEP LAYER ---------- */
+const WORLD_BIBLE=Object.freeze({
+  identity:{
+    city:"San Patricio del Chañar",
+    province:"Neuquén",
+    country:"Argentina",
+    character:["río","bardas","viento","chacras","viñedos","picadas","producción","barrios","vida cotidiana"]
+  },
+  spatialLogic:{
+    north:"bardas / altura / miradores",
+    south:"río / costa / dique / balneario",
+    west:"chacras / Camino del Vino / bodegas",
+    east:"expansión urbana / producción / Parque Industrial",
+    center:"vida cívica / comercio / barrios"
+  },
+  activityLayers:{
+    morning:["escuela","trabajo","comercio","movilidad"],
+    midday:["producción","comercio","sombra","pausa"],
+    afternoon:["regreso","deporte","plaza","costa"],
+    evening:["hogar","comercio","encuentros","atardecer"],
+    night:["movilidad baja","luces","río oscuro","silencio rural"]
+  },
+  economy:["comercio local","servicios","producción agrícola","vitivinicultura","industria","trabajo cotidiano"],
+  mobility:["auto","caminata","rutas","picadas","costanera","conexiones rurales"],
+  culture:["familias","escuela","club","plaza","trabajo","barrio","fiesta cotidiana"],
+  exploration:["río","bardas","viñedos","chacras","barrios","parque industrial","miradores","caminos rurales"]
+});
+
+const ROAD_NETWORK=[
+  {name:"Ruta Provincial 7",type:"ruta",axis:"norte-sur"},
+  {name:"Ruta Provincial 8",type:"ruta",axis:"conexión"},
+  {name:"Av. Ingeniero Gasparri",type:"urbana",axis:"principal"},
+  {name:"Av. Costanera",type:"costanera",axis:"río"},
+  {name:"Picada 1",type:"rural",axis:"productiva"},
+  {name:"Picada 4",type:"rural",axis:"productiva"},
+  {name:"Picada 4,5",type:"rural",axis:"productiva"},
+  {name:"Picada 7",type:"rural",axis:"productiva"},
+  {name:"Picada 9",type:"rural",axis:"productiva"},
+  {name:"Picada 11",type:"rural",axis:"productiva"},
+  {name:"Picada 12",type:"rural",axis:"productiva"},
+  {name:"Picada 15",type:"rural",axis:"productiva"},
+  {name:"Picada 19",type:"rural",axis:"productiva"},
+  {name:"Picada 20",type:"rural",axis:"productiva"}
+];
+
+const PLACES=[
+  ["Centro","cívico","comercio"],["Primeros Pobladores","barrio","residencial"],
+  ["Unión y Fuerza","barrio","residencial"],["128 Viviendas","barrio","residencial"],
+  ["76 Viviendas","barrio","residencial"],["50 Viviendas","barrio","residencial"],
+  ["Plan Federalismo","barrio","residencial"],["Suyai","barrio","residencial"],
+  ["Obrero","barrio","residencial"],["Jardín","barrio","residencial"],
+  ["12 de Octubre","barrio","residencial"],["25 de Abril","barrio","residencial"],
+  ["Loteo Social","expansión","residencial"],["340 Lotes","expansión","residencial"],
+  ["Parque Industrial","industrial","trabajo"],["Camino del Vino","rural","producción"],
+  ["Balneario Municipal","costa","recreación"],["Dique Compensador","río","infraestructura"],
+  ["Plaza de las Infancias","urbano","recreación"],["Polideportivo Tulio Ferraresso","urbano","deporte"],
+  ["Mirador La Virgen","barda","paisaje"],["Chacra Municipal Valles del Chañar","rural","producción"]
+];
+
+const DAILY_SCHEDULE=Object.freeze([
+  {from:5,to:7,label:"AMANECER",activity:"poca movilidad"},
+  {from:7,to:9,label:"MAÑANA",activity:"escuela · trabajo · apertura"},
+  {from:9,to:13,label:"MAÑANA",activity:"producción · comercio · circulación"},
+  {from:13,to:16,label:"MEDIODÍA",activity:"calor · sombra · pausa"},
+  {from:16,to:19,label:"TARDE",activity:"regreso · deporte · plaza · costa"},
+  {from:19,to:21,label:"ATARDECER",activity:"familias · comercio · río"},
+  {from:21,to:24,label:"NOCHE",activity:"hogar · luces · movilidad baja"},
+  {from:0,to:5,label:"NOCHE",activity:"silencio · río · rural"}
+]);
+
+const WEATHER_STATES=["despejado","parcialmente nublado","nublado","viento","llovizna","lluvia","tormenta"];
+const SEASONS=["verano","otoño","invierno","primavera"];
+
+/* Procedural detail is constrained by territory rules: nothing is scattered
+   without belonging to a neighborhood, axis, environment or activity layer. */
+function zoneForPosition(x,z){
+  if(z<-225) return "RÍO / DIQUE / COSTA";
+  if(z>215) return "BARDAS / MIRADORES";
+  if(Math.abs(x)>150 && z>-220 && z<210) return "CHACRAS / PRODUCCIÓN";
+  if(Math.abs(x)>145) return "PARQUE INDUSTRIAL / EXPANSIÓN";
+  if(Math.abs(x)<70 && Math.abs(z)<75) return "CENTRO";
+  return "BARRIOS";
+}
+
+function scheduleForHour(h){
+  return DAILY_SCHEDULE.find(s=>h>=s.from&&h<s.to) || DAILY_SCHEDULE[0];
+}
+
+function territoryContext(){
+  return {
+    zone:zoneForPosition(player.position.x,player.position.z),
+    hour:time%24,
+    schedule:scheduleForHour(time%24),
+    weather:weather,
+    season:SEASONS[Math.floor((time/24)%4)]
+  };
+}
+
 /* ---------- GAMEPLAY SYSTEMS ---------- */
 const keys={};
-let playing=false, vehicle=null, paused=false, time=8.5, weather="despejado";
+let playing=false, vehicle=null, paused=false, time=8.5, weather="despejado";\nlet weatherClock=0;
 let activeMessage="";
 let messageUntil=0;
 
@@ -431,7 +529,7 @@ function move(dt){
 
 function updateWorld(dt){
   /* Accelerated in-game clock: one real second ~= four game minutes. */
-  time=(time+dt*.0667)%24;
+  time=(time+dt*.0667)%24;\n  weatherClock+=dt;\n  if(weatherClock>75){ weatherClock=0; weather=WEATHER_STATES[Math.floor(Math.random()*WEATHER_STATES.length)]; }
   const h=time;
   const daylight=Math.max(0,Math.sin((h-6)/12*Math.PI));
   sun.intensity=1.0+daylight*2.3;
@@ -449,7 +547,7 @@ function updateWorld(dt){
 
   const period=h<7?"AMANECER":h<12?"MAÑANA":h<17?"TARDE":h<21?"ATARDECER":"NOCHE";
   const hud=document.getElementById("worldTime");
-  if(hud) hud.textContent=period+" · "+String(Math.floor(h)).padStart(2,"0")+":"+String(Math.floor((h%1)*60)).padStart(2,"0");
+  if(hud){\n    const ctx=territoryContext();\n    hud.textContent=period+" · "+String(Math.floor(h)).padStart(2,"0")+":"+String(Math.floor((h%1)*60)).padStart(2,"0")+" · "+ctx.weather.toUpperCase();\n  }
 }
 
 function updateCamera(dt){
