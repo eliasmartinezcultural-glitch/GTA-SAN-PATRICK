@@ -1,52 +1,250 @@
 {
-  "version":"0.2-territorio",
-  "source_note":"Base de diseño territorial construida con cartografía pública provincial y fuentes oficiales locales/provinciales. Las coordenadas x/z del juego son una representación artística escalada, no coordenadas GPS.",
-  "reference_map":"Dirección Provincial de Catastro e Información Territorial - Mapa de localidad de San Patricio del Chañar",
-  "zones":[
-    {"id":"centro","name":"CENTRO","type":"urbano","x":0,"z":20},
-    {"id":"sur","name":"SECTOR SUR","type":"urbano","x":35,"z":92},
-    {"id":"chacras","name":"CHACRAS Y PICADAS","type":"rural_productivo","x":-105,"z":-45},
-    {"id":"rio","name":"RÍO NEUQUÉN","type":"natural","x":0,"z":-125},
-    {"id":"barda","name":"BARDAS","type":"natural","x":0,"z":-185},
-    {"id":"bodegas","name":"CORREDOR VITIVINÍCOLA","type":"productivo","x":120,"z":-55},
-    {"id":"dique","name":"DIQUE COMPENSADOR","type":"natural","x":170,"z":-145}
+  "version": "0.3-mundo-vivo",
+  "source_note": "Base de diseño territorial construida con cartografía pública provincial y fuentes oficiales locales/provinciales. Las coordenadas x/z del juego son una representación artística escalada, no coordenadas GPS.",
+  "reference_map": "Dirección Provincial de Catastro e Información Territorial - Mapa de localidad de San Patricio del Chañar",
+  "zones": [
+    {
+      "id": "centro",
+      "name": "CENTRO",
+      "type": "urbano",
+      "x": 0,
+      "z": 20
+    },
+    {
+      "id": "sur",
+      "name": "SECTOR SUR",
+      "type": "urbano",
+      "x": 35,
+      "z": 92
+    },
+    {
+      "id": "chacras",
+      "name": "CHACRAS Y PICADAS",
+      "type": "rural_productivo",
+      "x": -105,
+      "z": -45
+    },
+    {
+      "id": "rio",
+      "name": "RÍO NEUQUÉN",
+      "type": "natural",
+      "x": 0,
+      "z": -125
+    },
+    {
+      "id": "barda",
+      "name": "BARDAS",
+      "type": "natural",
+      "x": 0,
+      "z": -185
+    },
+    {
+      "id": "bodegas",
+      "name": "CORREDOR VITIVINÍCOLA",
+      "type": "productivo",
+      "x": 120,
+      "z": -55
+    },
+    {
+      "id": "dique",
+      "name": "DIQUE COMPENSADOR",
+      "type": "natural",
+      "x": 170,
+      "z": -145
+    }
   ],
-  "roads":[
-    {"id":"rp7","name":"Ruta Provincial 7","type":"principal","angle":-0.42},
-    {"id":"rp8","name":"Ruta Provincial 8","type":"principal","angle":0.18},
-    {"id":"picada1","name":"Picada 1","type":"rural"},
-    {"id":"picada4","name":"Picada 4½","type":"rural"},
-    {"id":"picada5","name":"Picada 5","type":"rural"},
-    {"id":"picada7","name":"Picada 7","type":"rural"},
-    {"id":"picada8","name":"Picada 8","type":"rural"}
+  "roads": [
+    {
+      "id": "rp7",
+      "name": "Ruta Provincial 7",
+      "type": "principal",
+      "angle": -0.42
+    },
+    {
+      "id": "rp8",
+      "name": "Ruta Provincial 8",
+      "type": "principal",
+      "angle": 0.18
+    },
+    {
+      "id": "picada1",
+      "name": "Picada 1",
+      "type": "rural"
+    },
+    {
+      "id": "picada4",
+      "name": "Picada 4½",
+      "type": "rural"
+    },
+    {
+      "id": "picada5",
+      "name": "Picada 5",
+      "type": "rural"
+    },
+    {
+      "id": "picada7",
+      "name": "Picada 7",
+      "type": "rural"
+    },
+    {
+      "id": "picada8",
+      "name": "Picada 8",
+      "type": "rural"
+    }
   ],
-  "pois":[
-    {"id":"municipalidad","name":"Municipalidad","category":"institucional","zone":"centro"},
-    {"id":"hospital","name":"Hospital","category":"salud","zone":"centro"},
-    {"id":"policia","name":"Policía","category":"seguridad","zone":"centro"},
-    {"id":"bomberos","name":"Bomberos","category":"emergencia","zone":"centro"},
-    {"id":"registro","name":"Registro Civil","category":"institucional","zone":"centro"},
-    {"id":"banco","name":"Banco / cajero","category":"economia","zone":"centro"},
-    {"id":"escuela1","name":"Escuela","category":"educacion","zone":"centro"},
-    {"id":"plaza","name":"Plaza","category":"espacio_publico","zone":"centro"},
-    {"id":"deporte1","name":"Campo deportivo","category":"deporte","zone":"centro"},
-    {"id":"skate","name":"Pista de skate","category":"deporte","zone":"sur"},
-    {"id":"epen","name":"EPEN","category":"servicios","zone":"sur"},
-    {"id":"radio","name":"Radio municipal","category":"comunicacion","zone":"sur"},
-    {"id":"cultural","name":"Centro cultural","category":"cultura","zone":"sur"},
-    {"id":"sum","name":"SUM","category":"comunidad","zone":"sur"},
-    {"id":"huerta","name":"Huerta / producción","category":"productivo","zone":"chacras"},
-    {"id":"chacra_municipal","name":"Chacra Municipal Valles del Chañar","category":"productivo","zone":"chacras"},
-    {"id":"bodega_fin_mundo","name":"Bodega Del Fin del Mundo","category":"bodega","zone":"bodegas","route":"RP8 km 9"},
-    {"id":"bodega_malma","name":"Bodega Malma","category":"bodega","zone":"bodegas","route":"RP7 / Calle 15"},
-    {"id":"bodega_schroeder","name":"Familia Schroeder","category":"bodega","zone":"bodegas","route":"RP7 / Picada 7"},
-    {"id":"bodega_secreto","name":"Secreto Patagónico","category":"bodega","zone":"bodegas","route":"Picada 4½"},
-    {"id":"bodega_patritti","name":"Patritti","category":"bodega","zone":"bodegas","route":"Picada 1 Norte"},
-    {"id":"balneario","name":"Balneario Municipal","category":"naturaleza","zone":"rio"},
-    {"id":"dique","name":"Dique Compensador","category":"naturaleza","zone":"dique"},
-    {"id":"mirador","name":"Mirador La Virgen","category":"mirador","zone":"barda","route":"Calle 11 Norte"}
+  "pois": [
+    {
+      "id": "municipalidad",
+      "name": "Municipalidad",
+      "category": "institucional",
+      "zone": "centro"
+    },
+    {
+      "id": "hospital",
+      "name": "Hospital",
+      "category": "salud",
+      "zone": "centro"
+    },
+    {
+      "id": "policia",
+      "name": "Policía",
+      "category": "seguridad",
+      "zone": "centro"
+    },
+    {
+      "id": "bomberos",
+      "name": "Bomberos",
+      "category": "emergencia",
+      "zone": "centro"
+    },
+    {
+      "id": "registro",
+      "name": "Registro Civil",
+      "category": "institucional",
+      "zone": "centro"
+    },
+    {
+      "id": "banco",
+      "name": "Banco / cajero",
+      "category": "economia",
+      "zone": "centro"
+    },
+    {
+      "id": "escuela1",
+      "name": "Escuela",
+      "category": "educacion",
+      "zone": "centro"
+    },
+    {
+      "id": "plaza",
+      "name": "Plaza",
+      "category": "espacio_publico",
+      "zone": "centro"
+    },
+    {
+      "id": "deporte1",
+      "name": "Campo deportivo",
+      "category": "deporte",
+      "zone": "centro"
+    },
+    {
+      "id": "skate",
+      "name": "Pista de skate",
+      "category": "deporte",
+      "zone": "sur"
+    },
+    {
+      "id": "epen",
+      "name": "EPEN",
+      "category": "servicios",
+      "zone": "sur"
+    },
+    {
+      "id": "radio",
+      "name": "Radio municipal",
+      "category": "comunicacion",
+      "zone": "sur"
+    },
+    {
+      "id": "cultural",
+      "name": "Centro cultural",
+      "category": "cultura",
+      "zone": "sur"
+    },
+    {
+      "id": "sum",
+      "name": "SUM",
+      "category": "comunidad",
+      "zone": "sur"
+    },
+    {
+      "id": "huerta",
+      "name": "Huerta / producción",
+      "category": "productivo",
+      "zone": "chacras"
+    },
+    {
+      "id": "chacra_municipal",
+      "name": "Chacra Municipal Valles del Chañar",
+      "category": "productivo",
+      "zone": "chacras"
+    },
+    {
+      "id": "bodega_fin_mundo",
+      "name": "Bodega Del Fin del Mundo",
+      "category": "bodega",
+      "zone": "bodegas",
+      "route": "RP8 km 9"
+    },
+    {
+      "id": "bodega_malma",
+      "name": "Bodega Malma",
+      "category": "bodega",
+      "zone": "bodegas",
+      "route": "RP7 / Calle 15"
+    },
+    {
+      "id": "bodega_schroeder",
+      "name": "Familia Schroeder",
+      "category": "bodega",
+      "zone": "bodegas",
+      "route": "RP7 / Picada 7"
+    },
+    {
+      "id": "bodega_secreto",
+      "name": "Secreto Patagónico",
+      "category": "bodega",
+      "zone": "bodegas",
+      "route": "Picada 4½"
+    },
+    {
+      "id": "bodega_patritti",
+      "name": "Patritti",
+      "category": "bodega",
+      "zone": "bodegas",
+      "route": "Picada 1 Norte"
+    },
+    {
+      "id": "balneario",
+      "name": "Balneario Municipal",
+      "category": "naturaleza",
+      "zone": "rio"
+    },
+    {
+      "id": "dique",
+      "name": "Dique Compensador",
+      "category": "naturaleza",
+      "zone": "dique"
+    },
+    {
+      "id": "mirador",
+      "name": "Mirador La Virgen",
+      "category": "mirador",
+      "zone": "barda",
+      "route": "Calle 11 Norte"
+    }
   ],
-  "gameplay_layers":[
+  "gameplay_layers": [
     "movilidad",
     "exploracion",
     "trabajo",
@@ -57,5 +255,86 @@
     "actividades",
     "secretos",
     "progresion"
+  ],
+  "gameplay_systems": {
+    "time_and_daylight": {
+      "enabled": true,
+      "cycle_hours": 24,
+      "save_local": true
+    },
+    "discovery": {
+      "enabled": true,
+      "reward": 150,
+      "save_local": true
+    },
+    "missions": {
+      "enabled": true,
+      "stages": [
+        "plaza",
+        "municipalidad",
+        "chacra_municipal",
+        "free_roam"
+      ],
+      "reward": 2500
+    },
+    "npc_life": {
+      "enabled": true,
+      "roles": [
+        "vecino",
+        "trabajador",
+        "productor",
+        "estudiante",
+        "deportista",
+        "comerciante",
+        "chacarero",
+        "artista"
+      ],
+      "daytime_activity": true
+    },
+    "vehicles": {
+      "enabled": true,
+      "prototype": "auto",
+      "enter_exit": "E",
+      "speed_modes": [
+        "a_pie",
+        "vehiculo"
+      ]
+    },
+    "economy": {
+      "enabled": true,
+      "start_money": 15000,
+      "discovery_reward": 150,
+      "mission_reward": 2500
+    },
+    "mobile": {
+      "enabled": true,
+      "touch_controls": true,
+      "local_save": true
+    },
+    "progression": {
+      "enabled": true,
+      "local_save": true
+    }
+  },
+  "territory_principles": [
+    "La ciudad es el sistema central, no un decorado.",
+    "Centro, sector sur, chacras, río, bardas, corredor vitivinícola y dique deben tener usos jugables distintos.",
+    "Las rutas y picadas funcionan como conexiones entre actividades, no solo como textura.",
+    "Los POI oficiales/locales son nodos de juego: descubrirlos, visitarlos y convertirlos en misiones.",
+    "La representación x/z es artística y escalada; no sustituye una cartografía GPS."
+  ],
+  "future_layers": [
+    "red vial detallada y nombres de calles verificados",
+    "vehículos diferenciados y propiedad",
+    "trabajos y economía local",
+    "propiedades y hogares",
+    "relaciones y reputación",
+    "actividades deportivas y culturales",
+    "ciclo agrícola y productivo",
+    "clima y eventos",
+    "fauna y vida del río",
+    "misiones ramificadas con consecuencias",
+    "tránsito y peatones con rutinas",
+    "optimización móvil"
   ]
 }
