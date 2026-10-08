@@ -2,29 +2,17 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111815">
-<title>SAN PATRICK — San Patricio del Chañar</title>
-<link rel="stylesheet" href="./style.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>San Patricio — Juego</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main id="app" aria-label="SAN PATRICK">
-  <canvas id="game" aria-label="Mundo jugable"></canvas>
-  <div id="hud"><strong>SAN PATRICK</strong><span id="status">Cargando mundo…</span></div>
-  <button id="menu" type="button" aria-label="Abrir menú">☰</button>
-  <div id="hint">WASD / FLECHAS · E interactuar</div>
-  <div id="toast" aria-live="polite"></div>
-  <section id="menuPanel" hidden>
-    <div class="panel">
-      <button id="close" class="x" type="button" aria-label="Cerrar">×</button>
-      <h2>SAN PATRICK</h2>
-      <p id="diag">Mundo protegido · modo juego</p>
-      <button id="resume" type="button">CONTINUAR</button>
-      <button id="recover" type="button">RECUPERAR JUEGO</button>
-    </div>
-  </section>
-  <div id="boot" role="status">MONTANDO EL MUNDO…</div>
-</main>
-<script type="module" src="./game.js"></script>
+<canvas id="game"></canvas>
+<div id="hud">
+  <div><b>SAN PATRICIO DEL CHAÑAR</b><span id="zone">Centro</span></div>
+  <div id="clock">08:00</div>
+</div>
+<div id="hint">WASD / flechas · E interactuar</div>
+<script src="game.js"></script>
 </body>
 </html>
