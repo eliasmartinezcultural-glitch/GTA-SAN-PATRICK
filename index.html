@@ -8,30 +8,53 @@
 </head>
 <body>
 <div id="hud">
-  <div class="brand">SAN PATRICK <span>0.2</span></div>
+  <div class="brand">SAN PATRICK <span>0.3</span></div>
   <div class="location">SAN PATRICIO DEL CHAÑAR · PATAGONIA</div>
-  <div class="hint">WASD / FLECHAS · explorar · M · mapa</div>
+  <div class="hint">WASD / FLECHAS · E interactuar · M mapa · P progreso</div>
 </div>
 
 <div id="minimap">
   <div class="map-title">CHAÑAR · MAPA DE JUEGO</div>
   <div id="map-canvas"></div>
-  <div class="map-legend"><span>●</span> jugador &nbsp; <b>━</b> RP7 &nbsp; <i>·</i> picadas</div>
+  <div class="map-legend"><span>●</span> jugador &nbsp; <b>━</b> rutas &nbsp; <i>·</i> puntos</div>
 </div>
+
+<div id="interaction">E · interactuar</div>
 
 <div id="map-panel">
   <div class="panel-head"><span>MAPA TERRITORIAL</span><button id="close-map">×</button></div>
-  <p class="panel-sub">San Patricio del Chañar · versión de diseño jugable</p>
+  <p class="panel-sub">Centro · sector sur · chacras · río · bardas · corredor vitivinícola · dique</p>
   <div id="zone-list"></div>
+</div>
+
+<div id="stats-panel">
+  <div class="panel-head"><span>PROGRESO DEL MUNDO</span><button id="close-stats">×</button></div>
+  <div class="stats-grid">
+    <div><small>DINERO</small><strong id="stat-money">$15.000</strong></div>
+    <div><small>HORA</small><strong id="stat-time">08:30</strong></div>
+    <div><small>DESCUBRIMIENTOS</small><strong id="stat-discovered">0</strong></div>
+    <div><small>OBJETIVO</small><strong id="stat-mission">Conocer la plaza</strong></div>
+  </div>
+  <p class="panel-sub">Cada punto descubierto queda guardado en este dispositivo. El mundo sigue siendo libre aunque no estés haciendo una misión.</p>
+</div>
+
+<div id="touch-controls">
+  <div class="touch-dpad">
+    <button id="t-up">▲</button>
+    <div><button id="t-left">◀</button><button id="t-down">▼</button><button id="t-right">▶</button></div>
+  </div>
+  <div class="touch-actions">
+    <button id="t-e">E</button><button id="t-m">M</button><button id="t-p">P</button>
+  </div>
 </div>
 
 <div id="start">
   <div class="start-card">
     <p class="eyebrow">SAN PATRICIO DEL CHAÑAR · MUNDO ABIERTO</p>
     <h1>SAN<br>PATRICK</h1>
-    <p>Un sandbox inspirado en la filosofía de juego de <strong>GTA San Andreas</strong>, pero construido alrededor de la vida, el territorio y los caminos de San Patricio del Chañar.</p>
+    <p>Un mundo abierto inspirado en la filosofía de juego de GTA San Andreas, pero construido alrededor de la vida, el territorio, la producción y los caminos de San Patricio del Chañar.</p>
     <button id="play">ENTRAR AL MUNDO</button>
-    <small>Prototipo 0.2 · mapa territorial en construcción</small>
+    <small>Prototipo 0.3 · sistemas de exploración en expansión</small>
   </div>
 </div>
 <div id="message"></div>
