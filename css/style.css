@@ -11,7 +11,7 @@ canvas{display:block}
 #message,#interaction{position:fixed;z-index:8;left:50%;transform:translateX(-50%);padding:10px 15px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);font-size:12px;letter-spacing:.04em;white-space:nowrap}
 #message{bottom:15%;opacity:0;transition:.25s}#message.show{opacity:1}
 #interaction{bottom:9%;font-size:10px;opacity:.55}
-#minimap{position:fixed;z-index:7;right:22px;top:22px;width:220px;height:180px;padding:12px;background:rgba(8,11,9,.72);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);pointer-events:none}
+#minimap{position:fixed;z-index:7;left:22px;bottom:22px;width:220px;height:180px;padding:12px;background:rgba(8,11,9,.72);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);pointer-events:none}
 .map-title{font-size:9px;letter-spacing:.14em;opacity:.75;margin-bottom:7px}.map-legend{font-size:8px;opacity:.55;margin-top:6px}
 .map-legend span{font-size:13px}.map-legend b{font-size:10px}.map-legend i{font-style:normal}
 .map-bg{position:relative;width:100%;height:125px;overflow:hidden;background:linear-gradient(90deg,rgba(111,128,94,.08),rgba(176,155,113,.12))}
@@ -33,7 +33,7 @@ canvas{display:block}
 .touch-actions button{width:45px;height:45px;border-radius:50%}
 @media(max-width:700px){
  #menu-button{top:12px;right:12px;width:38px;height:38px}
- #minimap{width:150px;height:135px;right:12px;top:62px}.map-bg{height:88px}.map-legend{font-size:7px}
+ #minimap{width:150px;height:135px;left:12px;bottom:92px}.map-bg{height:88px}.map-legend{font-size:7px}
  #map-panel,#stats-panel{inset:3vh 3vw;padding:18px}.zone-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}
  #interaction{bottom:24%;font-size:9px}.start-card{padding:32px 24px}.start-logo{font-size:68px}
  #touch-controls{display:flex}
