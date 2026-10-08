@@ -574,15 +574,10 @@ function projectLabel(item){
 
 /* ---------- UI ---------- */
 const start=document.getElementById("start");
-document.getElementById("play").onclick=()=>{
-  playing=true;
-  start.style.opacity="0";
-  setTimeout(()=>start.remove(),400);
-  flash("San Patricio del Chañar te espera");
-};
+let playing=true;
 
 const menuPanel=document.getElementById("menuPanel");
-document.getElementById("menu").onclick=()=>{if(playing)toggleMenu();};
+document.getElementById("menu").onclick=()=>toggleMenu();
 document.getElementById("close").onclick=()=>{paused=false;menuPanel.style.display="none";};
 document.getElementById("continue").onclick=()=>{paused=false;menuPanel.style.display="none";};
 
