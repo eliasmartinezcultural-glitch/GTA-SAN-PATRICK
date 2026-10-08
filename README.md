@@ -236,3 +236,65 @@ Cada nueva versión debe **sumar profundidad sin destruir lo que ya funciona**.
 
 Tecnología: HTML + CSS + JavaScript + Three.js por CDN.  
 Hosting previsto: GitHub Pages.
+
+
+## 0.5 — LEY TERRITORIAL: CHAÑAR FIRST
+
+La prioridad del siguiente ciclo no es agregar cantidad de sistemas: es **hacer que el mundo parezca realmente San Patricio del Chañar**.
+
+> **Si una decisión mejora el videojuego pero hace que deje de parecer San Patricio del Chañar, se rechaza.**
+
+### Reconocimiento territorial
+
+El jugador debe poder reconocer Chañar aun sin leer carteles. La identidad debe surgir de la relación entre:
+
+- planta urbana;
+- borde urbano;
+- RP7 y RP8;
+- calles;
+- picadas;
+- chacras;
+- canales y producción;
+- corredor vitivinícola;
+- Río Neuquén y costa;
+- Balneario;
+- bardas;
+- Mirador La Virgen;
+- Dique Compensador;
+- barrios y equipamiento;
+- ritmo de tránsito y vida cotidiana.
+
+### Reforma del mapa
+
+El mapa entra en una etapa de reconstrucción territorial. La prioridad será:
+
+**GEOGRAFÍA → EJES VIALES → RELACIONES ESPACIALES → SECTORES → HITOS → CALLES → ACTIVIDAD → DECORACIÓN.**
+
+No se acepta una cuadrícula urbana genérica, POI comprimidos artificialmente, picadas convertidas en calles urbanas ni bodegas colocadas como edificios aislados.
+
+La cartografía oficial provincial se utiliza como referencia territorial y no como recurso gráfico copiado. Las coordenadas internas seguirán siendo propias, escaladas y diseñadas para gameplay.
+
+### Día, noche y clima
+
+El reloj deja de ser solamente visual. El horario modifica circulación, NPC, comercios, trabajos, actividades, iluminación y ambiente.
+
+El clima tendrá estados de despejado, nubosidad, viento, lluvia y tormenta. El **viento patagónico** será un rasgo ambiental importante. El clima solo modificará gameplay cuando produzca decisiones reales.
+
+Las estaciones podrán modificar luz, temperatura, vegetación y actividades sin convertir el juego en un sistema pesado.
+
+### Puerta de calidad territorial
+
+Antes de sumar grandes sistemas nuevos debemos superar una auditoría:
+
+1. RP7/RP8 correctamente jerarquizadas.
+2. Picadas conectadas al sistema rural/productivo.
+3. Río y bardas espacialmente coherentes.
+4. Dique correctamente relacionado con el sistema hídrico.
+5. Ciudad conectada con sus bordes rurales.
+6. Corredor vitivinícola territorialmente reconocible.
+7. Distancias comprimidas para jugar, pero relaciones espaciales conservadas.
+8. Ninguna coordenada artística presentada como GPS real.
+
+El detalle completo queda centralizado en **data/territory_rules.json**.
+
+**Nueva ley:** CHAÑAR NO ES DECORACIÓN. CHAÑAR ES EL MUNDO.
