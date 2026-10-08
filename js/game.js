@@ -74,13 +74,7 @@ world.add(car);
 
 const TERRITORY=await createTerritoryRuntime({scene,world,player,car,sun});
 
-const npcs=[];
-const npcRoles=["vecino","trabajador","productor","estudiante","deportista","comerciante","vecina","trabajadora","chacarero","estudiante","artista","vecino"];
-for(let i=0;i<12;i++){
- const n=new THREE.Group(),b=new THREE.Mesh(new THREE.CapsuleGeometry(.34,.8,5,8),mat(i%2?0x5e675f:0x765f4f));
- b.position.y=.8;n.add(b);n.position.set(-90+(i%4)*55,0,18+Math.floor(i/4)*25);world.add(n);
- npcs.push({o:n,base:n.position.clone(),phase:i*.7,role:npcRoles[i],name:["Tomás","Mica","Julián","Rocío","Nico","Sofi","Mateo","Abril","Leo","Cami","Bruno","Lola"][i]});
-}
+const npcs=[];\nconst npcRoles=["vecino","trabajador","productor","estudiante","deportista","comerciante","vecina","trabajadora","chacarero","estudiante","artista","vecino"];\nconst npcNames=["Tomás","Mica","Julián","Rocío","Nico","Sofi","Mateo","Abril","Leo","Cami","Bruno","Lola"];\nfunction createHuman(i){\n const n=new THREE.Group();\n const skin=[0xc98f72,0xb8785d,0xd7a184,0xa96750][i%4];\n const shirt=[0x355c7d,0x7a4e38,0x536b4f,0x8a6a42,0x5d5966,0x2f5260][i%6];\n const pants=[0x30343b,0x4b4a45,0x28384a,0x5a4a3c][i%4];\n const hair=[0x211b17,0x38251d,0x5a3825,0x1b2024][i%4];\n const torso=new THREE.Mesh(new THREE.CapsuleGeometry(.27,.55,4,8),mat(shirt));torso.position.y=1.05;n.add(torso);\n const head=new THREE.Mesh(new THREE.SphereGeometry(.25,10,8),mat(skin));head.position.y=1.72;n.add(head);\n const hairMesh=new THREE.Mesh(new THREE.SphereGeometry(.255,10,6,0,Math.PI*2,0,Math.PI*.48),mat(hair));hairMesh.position.y=1.82;n.add(hairMesh);\n for(const x of [-.105,.105]){const leg=new THREE.Mesh(new THREE.CapsuleGeometry(.095,.48,4,6),mat(pants));leg.position.set(x,.58,0);n.add(leg);}\n for(const x of [-.34,.34]){const arm=new THREE.Mesh(new THREE.CapsuleGeometry(.075,.45,4,6),mat(x<0&&i%2===0?skin:shirt));arm.position.set(x,1.08,0);arm.rotation.z=x<0?-0.12:0.12;n.add(arm);}\n n.userData.role=npcRoles[i];n.userData.name=npcNames[i];n.userData.human=true;\n return n;\n}\nfor(let i=0;i<12;i++){\n const n=createHuman(i);\n n.position.set(-90+(i%4)*55,0,18+Math.floor(i/4)*25);\n world.add(n);\n npcs.push({o:n,base:n.position.clone(),phase:i*.7,role:npcRoles[i],name:npcNames[i]});\n}
 
 let vehicleMode=false,started=false;
 let money=Number(localStorage.getItem("sp_money")||15000);
