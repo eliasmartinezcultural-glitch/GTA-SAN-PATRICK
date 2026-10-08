@@ -3,13 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111815">
 <title>SAN PATRICK — San Patricio del Chañar</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<button id="menu" aria-label="Menú">☰</button>
-<div id="hint">WASD / FLECHAS · E entrar/salir</div>
-<div id="menuPanel"><div class="panel"><button id="close">×</button><h2>SAN PATRICK</h2><p>Mundo abierto · Chañar</p><button id="continue">CONTINUAR</button></div></div>
+<main id="app" aria-label="SAN PATRICK">
+  <canvas id="game" aria-label="Mundo jugable"></canvas>
+  <div id="hud"><strong>SAN PATRICK</strong><span id="status">Cargando mundo…</span></div>
+  <button id="menu" type="button" aria-label="Abrir menú">☰</button>
+  <div id="hint">WASD / FLECHAS · E interactuar</div>
+  <div id="toast" aria-live="polite"></div>
+  <section id="menuPanel" hidden>
+    <div class="panel">
+      <button id="close" class="x" type="button" aria-label="Cerrar">×</button>
+      <h2>SAN PATRICK</h2>
+      <p id="diag">Mundo protegido · modo juego</p>
+      <button id="resume" type="button">CONTINUAR</button>
+      <button id="recover" type="button">RECUPERAR JUEGO</button>
+    </div>
+  </section>
+  <div id="boot" role="status">MONTANDO EL MUNDO…</div>
+</main>
 <script type="module" src="./game.js"></script>
 </body>
 </html>
