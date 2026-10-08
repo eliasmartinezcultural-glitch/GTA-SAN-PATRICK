@@ -90,6 +90,16 @@
       "id": "picada8",
       "name": "Picada 8",
       "type": "rural"
+    },
+    {
+      "id": "picada3",
+      "name": "Picada 3",
+      "type": "rural"
+    },
+    {
+      "id": "picada11",
+      "name": "Picada 11",
+      "type": "rural"
     }
   ],
   "pois": [
@@ -242,6 +252,34 @@
       "category": "mirador",
       "zone": "barda",
       "route": "Calle 11 Norte"
+    },
+    {
+      "id": "el_chical",
+      "name": "Bodega Urbana El Chical",
+      "category": "bodega",
+      "zone": "centro",
+      "route": "espacio cultural y vitivinícola"
+    },
+    {
+      "id": "sala_alimentos",
+      "name": "Sala de Elaboración de Alimentos",
+      "category": "productivo",
+      "zone": "sur",
+      "route": "infraestructura productiva"
+    },
+    {
+      "id": "costa_verde",
+      "name": "Costa Verde",
+      "category": "barrio",
+      "zone": "sur",
+      "route": "Picada III"
+    },
+    {
+      "id": "picada11",
+      "name": "Picada 11",
+      "category": "acceso_rural",
+      "zone": "chacras",
+      "route": "corredor productivo"
     }
   ],
   "gameplay_layers": [
@@ -254,7 +292,14 @@
     "misiones",
     "actividades",
     "secretos",
-    "progresion"
+    "progresion",
+    "transito",
+    "rutinas",
+    "actividades",
+    "reputacion",
+    "energia",
+    "combustible",
+    "navegacion"
   ],
   "gameplay_systems": {
     "time_and_daylight": {
@@ -289,16 +334,21 @@
         "chacarero",
         "artista"
       ],
-      "daytime_activity": true
+      "daytime_activity": true,
+      "routines": true
     },
     "vehicles": {
       "enabled": true,
       "prototype": "auto",
+      "future": [
+        "bicicleta",
+        "moto",
+        "camioneta",
+        "utilitario"
+      ],
       "enter_exit": "E",
-      "speed_modes": [
-        "a_pie",
-        "vehiculo"
-      ]
+      "fuel": true,
+      "ownership": true
     },
     "economy": {
       "enabled": true,
@@ -314,6 +364,25 @@
     "progression": {
       "enabled": true,
       "local_save": true
+    },
+    "jobs": {
+      "enabled": true,
+      "activities": [
+        "produccion",
+        "bodegas",
+        "comunidad",
+        "comercio",
+        "servicios"
+      ],
+      "local_economy": true
+    },
+    "multidevice": {
+      "enabled": true,
+      "mobile_first": true,
+      "touch_controls": true,
+      "keyboard_controls": true,
+      "performance_budget": "low_poly_streaming_ready",
+      "local_save": true
     }
   },
   "territory_principles": [
@@ -325,6 +394,8 @@
   ],
   "future_layers": [
     "red vial detallada y nombres de calles verificados",
+    "GPS interno y rutas por objetivos",
+    "tránsito por tipos de vía",
     "vehículos diferenciados y propiedad",
     "trabajos y economía local",
     "propiedades y hogares",
@@ -334,7 +405,69 @@
     "clima y eventos",
     "fauna y vida del río",
     "misiones ramificadas con consecuencias",
-    "tránsito y peatones con rutinas",
+    "peatones con rutinas por horario",
+    "radio ambiental propia",
+    "streaming por sectores",
     "optimización móvil"
-  ]
+  ],
+  "map_architecture": {
+    "scale": "artistic_scaled",
+    "anchor_logic": "relative territorial anchors",
+    "navigation": "internal world coordinates, later GPS-like route system",
+    "priority": [
+      "RP7",
+      "RP8",
+      "Picada 1",
+      "Picada 4½",
+      "Picada 5",
+      "Picada 7",
+      "Picada 8",
+      "Picada 11",
+      "urban streets",
+      "rural accesses"
+    ],
+    "sectors": [
+      "centro",
+      "sector_sur",
+      "chacras_picadas",
+      "rio_neuquen",
+      "bardas",
+      "corredor_vitivinicola",
+      "dique_compensador"
+    ],
+    "rule": "Never present artistic game coordinates as real GPS."
+  },
+  "gta_inspired_design": {
+    "reference": "GTA San Andreas gameplay philosophy",
+    "copyable_systems": [
+      "open_world",
+      "third_person",
+      "vehicles",
+      "missions",
+      "side_activities",
+      "economy",
+      "properties",
+      "stats",
+      "map",
+      "NPC routines",
+      "progression",
+      "secrets",
+      "day_night",
+      "free_roam",
+      "radio_style_ambience"
+    ],
+    "original_content_only": true,
+    "do_not_copy": [
+      "characters",
+      "story",
+      "dialogue",
+      "music",
+      "logos",
+      "textures",
+      "map geometry",
+      "missions",
+      "names",
+      "assets"
+    ]
+  }
 }
