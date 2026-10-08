@@ -7,11 +7,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="hud">
-  <div class="brand">SAN PATRICK <span>0.3</span></div>
-  <div class="location">SAN PATRICIO DEL CHAÑAR · PATAGONIA</div>
-  <div class="hint">WASD / FLECHAS · E interactuar · M mapa · P progreso</div>
-</div>
+<button id="menu-button" aria-label="Abrir menú">☰</button>
 
 <div id="minimap">
   <div class="map-title">CHAÑAR · MAPA DE JUEGO</div>
@@ -20,6 +16,24 @@
 </div>
 
 <div id="interaction">E · interactuar</div>
+
+<div id="pause-menu">
+  <div class="pause-card">
+    <div class="pause-brand">SAN PATRICK</div>
+    <button id="resume-game" class="menu-main">CONTINUAR</button>
+    <button id="menu-map">MAPA</button>
+    <button id="menu-progress">PROGRESO</button>
+    <button id="menu-save">GUARDAR</button>
+    <button id="menu-settings">CONFIGURACIÓN</button>
+    <div id="settings-panel">
+      <div class="settings-title">CONFIGURACIÓN</div>
+      <label><span>Vibración</span><input id="setting-vibration" type="checkbox" checked></label>
+      <label><span>Calidad visual</span><select id="setting-quality"><option value="high">Alta</option><option value="balanced" selected>Equilibrada</option><option value="low">Rendimiento</option></select></label>
+      <div class="settings-controls">PC · WASD / FLECHAS · E interactuar · M mapa · P progreso · ESC menú<br>Celular · controles táctiles</div>
+    </div>
+    <button id="menu-exit">VOLVER AL INICIO</button>
+  </div>
+</div>
 
 <div id="map-panel">
   <div class="panel-head"><span>MAPA TERRITORIAL</span><button id="close-map">×</button></div>
@@ -50,11 +64,8 @@
 
 <div id="start">
   <div class="start-card">
-    <p class="eyebrow">SAN PATRICIO DEL CHAÑAR · MUNDO ABIERTO</p>
-    <h1>SAN<br>PATRICK</h1>
-    <p>Un mundo abierto inspirado en la filosofía de juego de GTA San Andreas, pero construido alrededor de la vida, el territorio, la producción y los caminos de San Patricio del Chañar.</p>
-    <button id="play">ENTRAR AL MUNDO</button>
-    <small>Prototipo 0.3 · sistemas de exploración en expansión</small>
+    <div class="start-logo">SAN<br>PATRICK</div>
+    <button id="play">JUGAR</button>
   </div>
 </div>
 <div id="message"></div>
