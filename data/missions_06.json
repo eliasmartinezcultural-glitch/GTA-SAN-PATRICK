@@ -1,0 +1,78 @@
+{
+  "version": "0.6-missions",
+  "philosophy": "Las misiones hacen descubrir Chañar; el juego nunca se convierte en enciclopedia.",
+  "order": "grande_a_pequeno",
+  "chapters": [
+    {
+      "id": "m01",
+      "sector": "urbano",
+      "title": "Conocer el centro",
+      "goal": "plaza",
+      "reward": 2500,
+      "unlock": "m02"
+    },
+    {
+      "id": "m02",
+      "sector": "urbano",
+      "title": "Un día normal",
+      "goal": "municipalidad",
+      "reward": 2500,
+      "unlock": "m03"
+    },
+    {
+      "id": "m03",
+      "sector": "borde",
+      "title": "Salir del pueblo",
+      "goal": "conexion_chacras",
+      "reward": 2500,
+      "unlock": "m04"
+    },
+    {
+      "id": "m04",
+      "sector": "chacras",
+      "title": "El mundo productivo",
+      "goal": "chacra_municipal",
+      "reward": 2500,
+      "unlock": "m05"
+    },
+    {
+      "id": "m05",
+      "sector": "vitivinicola",
+      "title": "Camino del vino",
+      "goal": "corredor_vino",
+      "reward": 3000,
+      "unlock": "m06"
+    },
+    {
+      "id": "m06",
+      "sector": "rio",
+      "title": "Bajar al río",
+      "goal": "balneario",
+      "reward": 3000,
+      "unlock": "m07"
+    },
+    {
+      "id": "m07",
+      "sector": "bardas",
+      "title": "Mirar el territorio",
+      "goal": "mirador",
+      "reward": 3500,
+      "unlock": "m08"
+    },
+    {
+      "id": "m08",
+      "sector": "dique",
+      "title": "Más allá del pueblo",
+      "goal": "dique",
+      "reward": 4000,
+      "unlock": "free_roam"
+    }
+  ],
+  "design_rules": [
+    "Cada misión usa el mapa, no una pantalla de información.",
+    "El objetivo se expresa como acción, no como clase de historia.",
+    "Las misiones conectan sectores grandes antes de agregar calles pequeñas.",
+    "Las recompensas abren movilidad, actividades, dinero o acceso.",
+    "El jugador puede abandonar una misión y continuar explorando."
+  ]
+}
