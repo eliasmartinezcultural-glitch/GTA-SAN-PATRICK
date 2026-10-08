@@ -84,21 +84,23 @@ let money=Number(localStorage.getItem("sp_money")||15000);
 let missionIndex=Number(localStorage.getItem("sp_mission")||0);
 let timeOfDay=Number(localStorage.getItem("sp_time")||8.5);
 let discovered=JSON.parse(localStorage.getItem("sp_discovered")||"[]");
-let currentPOI=null,saveTick=0;
+let currentPOI=null,saveTick=0,menuOpen=false;
 const keys={};
 
 addEventListener("keydown",e=>{
- const k=e.key.toLowerCase();keys[k]=true;
- if(k==="m")toggleMap();
- if(k==="e"&&started)interact();
- if(k==="p"&&started)toggleStats();
+ const k=e.key.toLowerCase();
+ if(k==="escape"){e.preventDefault();if(started)toggleMenu();return}
+ keys[k]=true;
+ if(k==="m"&&started&&!menuOpen)toggleMap();
+ if(k==="e"&&started&&!menuOpen)interact();
+ if(k==="p"&&started&&!menuOpen)toggleStats();
 });
 addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
 
 const start=document.getElementById("start"),msg=document.getElementById("message");
 document.getElementById("play").onclick=()=>{
- started=true;start.style.opacity=0;setTimeout(()=>start.remove(),550);
- say("OBJETIVO 01 · Conocé el centro y llegá a la plaza.");
+ started=true;document.body.classList.add("game-active");
+ start.style.opacity=0;setTimeout(()=>start.remove(),550);
  updateStats();
 };
 function say(t){msg.textContent=t;msg.classList.add("show");clearTimeout(say.t);say.t=setTimeout(()=>msg.classList.remove("show"),3200)}
@@ -106,6 +108,27 @@ function say(t){msg.textContent=t;msg.classList.add("show");clearTimeout(say.t);
 const panel=document.getElementById("map-panel");
 function toggleMap(){if(!started)return;panel.style.display=panel.style.display==="block"?"none":"block";updateMap()}
 document.getElementById("close-map").onclick=()=>panel.style.display="none";
+
+const pauseMenu=document.getElementById("pause-menu");
+const settingsPanel=document.getElementById("settings-panel");
+function toggleMenu(force){
+ if(!started)return;
+ menuOpen=force===undefined?!menuOpen:force;
+ pauseMenu.classList.toggle("open",menuOpen);
+ if(menuOpen){panel.style.display="none";stats.style.display="none";settingsPanel.classList.remove("open");}
+}
+document.getElementById("menu-button").onclick=()=>toggleMenu();
+document.getElementById("resume-game").onclick=()=>toggleMenu(false);
+document.getElementById("menu-map").onclick=()=>{toggleMenu(false);toggleMap()};
+document.getElementById("menu-progress").onclick=()=>{toggleMenu(false);toggleStats()};
+document.getElementById("menu-save").onclick=()=>{save();say("PARTIDA GUARDADA");toggleMenu(false)};
+document.getElementById("menu-settings").onclick=()=>settingsPanel.classList.toggle("open");
+document.getElementById("menu-exit").onclick=()=>{save();location.reload()};
+document.getElementById("setting-quality").onchange=e=>{
+ const v=e.target.value;
+ renderer.setPixelRatio(v==="high"?Math.min(devicePixelRatio,1.8):v==="low"?1:Math.min(devicePixelRatio,1.35));
+};
+document.getElementById("setting-vibration").onchange=e=>{if(!e.target.checked)navigator.vibrate=undefined};
 
 const stats=document.getElementById("stats-panel");
 function toggleStats(){stats.style.display=stats.style.display==="block"?"none":"block";updateStats()}
@@ -201,12 +224,12 @@ function setupTouch(){
 }
 setupTouch();
 
-const hud=document.querySelector(".location");
+
 const clock=new THREE.Clock();const desired=new THREE.Vector3();
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.035),t=performance.now()/1000;
- if(started&&panel.style.display!=="block"&&stats.style.display!=="block"){
+ if(started&&!menuOpen&&panel.style.display!=="block"&&stats.style.display!=="block"){
   const m=moveCharacter(dt),o=vehicleMode?car:player;
   desired.set(o.position.x-m.dx*7,5.2,o.position.z-m.dz*7+2.4);
   camera.position.lerp(desired,1-Math.pow(.001,dt));camera.lookAt(o.position.x,1.15,o.position.z);
@@ -214,7 +237,6 @@ function animate(){
   timeOfDay=(timeOfDay+dt*.055)%24;applyDaylight();
   const near=nearestPOI();
   currentPOI=near&&near.dist<9?poiById[near.id]:null;
-  hud.textContent="SAN PATRICIO DEL CHAÑAR · "+(vehicleMode?"EN VEHÍCULO":"A PIE")+" · $"+money.toLocaleString("es-AR")+" · "+formatTime(timeOfDay);
   if(currentPOI)document.getElementById("interaction").textContent="E · "+currentPOI.name;
   else document.getElementById("interaction").textContent="E · interactuar";
   if(++saveTick%120===0)save();
