@@ -1,4 +1,5 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import { createTerritoryRuntime } from "./territory-runtime.js";
 
 const DATA=await fetch("./data/world.json").then(r=>r.json());
 const scene=new THREE.Scene();
@@ -71,6 +72,8 @@ box(0,.45,0,2.3,.55,4.2,0x3c4748,car);box(0,.95,-.15,1.8,.65,2.1,0x202a2c,car);
 for(const x of [-1.12,1.12])for(const z of [-1.35,1.35]){const w=new THREE.Mesh(new THREE.CylinderGeometry(.36,.36,.22,16),mat(0x171717));w.rotation.z=Math.PI/2;w.position.set(x,.25,z);w.castShadow=true;car.add(w)}
 world.add(car);
 
+const TERRITORY=await createTerritoryRuntime({scene,world,player,car,sun});
+
 const npcs=[];
 const npcRoles=["vecino","trabajador","productor","estudiante","deportista","comerciante","vecina","trabajadora","chacarero","estudiante","artista","vecino"];
 for(let i=0;i<12;i++){
@@ -137,7 +140,7 @@ function updateStats(){
  document.getElementById("stat-money").textContent="$"+money.toLocaleString("es-AR");
  document.getElementById("stat-time").textContent=formatTime(timeOfDay);
  document.getElementById("stat-discovered").textContent=discovered.length+"/"+DATA.pois.length;
- document.getElementById("stat-mission").textContent=["Conocer la plaza","Recorrer el centro","Llegar al corredor productivo","Libre exploración"][Math.min(missionIndex,3)];
+ document.getElementById("stat-mission").textContent=TERRITORY.getMissionTitle(missionIndex);
 }
 
 const map=document.getElementById("map-canvas");map.className="map-bg";
@@ -198,10 +201,12 @@ function updateNPC(t){
 }
 function updateMap(){const o=vehicleMode?car:player;mp.style.left=(50+o.position.x/4)+"%";mp.style.top=(54+o.position.z/4)+"%"}
 function missionCheck(o){
- const targets=[[-82,45,"Llegaste a la plaza. El centro ya es tuyo para explorar."],[-30,20,"Visitaste la Municipalidad. Ahora entendés mejor dónde estás parado."],[-110,-63,"Entraste al mundo productivo de Chañar. Desde acá el mapa se abre de verdad." ]];
- const target=targets[missionIndex];
- if(target&&o.position.distanceTo(new THREE.Vector3(target[0],0,target[1]))<10){
-   money+=2500;missionIndex++;save();say("MISIÓN COMPLETADA · +$2.500 · "+target[2]);updateStats();
+ const target=TERRITORY.mission(missionIndex);
+ if(!target)return;
+ if(o.position.distanceTo(new THREE.Vector3(target.x,0,target.z))<10){
+   money+=target.reward;missionIndex++;save();
+   say("MISIÓN COMPLETADA · +$"+target.reward.toLocaleString("es-AR")+" · "+target.title);
+   updateStats();
  }
 }
 function applyDaylight(){
@@ -235,6 +240,7 @@ function animate(){
   camera.position.lerp(desired,1-Math.pow(.001,dt));camera.lookAt(o.position.x,1.15,o.position.z);
   updateNPC(t);updateMap();missionCheck(o);
   timeOfDay=(timeOfDay+dt*.055)%24;applyDaylight();
+  TERRITORY.update({dt,object:o});
   const near=nearestPOI();
   currentPOI=near&&near.dist<9?poiById[near.id]:null;
   if(currentPOI)document.getElementById("interaction").textContent="E · "+currentPOI.name;
